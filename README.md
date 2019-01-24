@@ -1,0 +1,2 @@
+Zabbix agent config updater
+
