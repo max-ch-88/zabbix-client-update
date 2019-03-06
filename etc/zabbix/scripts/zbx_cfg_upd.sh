@@ -8,10 +8,10 @@ url=$3
 user=zabbix
 password=zabbix
 
-if [ -z $2 ]; then
-    path="/etc/zabbix"
-else
-    path=$2
+if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+    echo "Usage: $0 <HOSTNAME> <Zabbix config path> <Repo URL>"
+    echo "Example: $0 'Zabbix server' /etc/zabbix https://192.168.0.1"
+    exit 1
 fi
 
 # Get MD5 of config files from server
