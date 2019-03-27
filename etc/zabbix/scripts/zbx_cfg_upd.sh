@@ -1,4 +1,10 @@
 #!/bin/sh
+# Author:      Chudinov M.B.
+# Description: Update zabbix-agent configuration
+#              $1 The hostname as it created in Zabbix server
+#              $2 The full path to dir with zabbix_agentd.conf
+#              $3 The URL of the repository site
+#
 
 host=$1
 path=$2
@@ -9,7 +15,7 @@ user=zabbix
 password=zabbix
 
 if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
-    echo "Usage: $0 <HOSTNAME> <Zabbix config path> <Repo URL>"
+    echo "Usage: $0 <HOSTNAME> <Zabbix config dir> <Repo URL>"
     echo "Example: $0 'Zabbix server' /etc/zabbix https://192.168.0.1"
     exit 1
 fi
@@ -35,15 +41,9 @@ fi
 if [ "$md5local" != "$md5repo" ]; then
     sudo /usr/bin/rm -fr $path/*
     sudo /usr/bin/wget -q -r --user=$user --password=$password --no-parent -nH --cut-dirs=2 $url/$host/ --reject index.html -P $path --no-check-certificate
-    sudo /usr/bin/systemctl restart zabbix-agent
+    echo "sudo systemctl restart zabbix-agent" | SHELL=/bin/sh at -m now +1min 2>/dev/null
     echo 2
     exit 2
-#    if [ $? == 0 ]; then
-#        zabbix_sender -c $path/zabbix_agentd.conf -k agent.config.status[{HOSTNAME},{$PATH},{$URL}] -o 2
-#        exit 2
-#    else
-#        exit 1
-#    fi
 else
     echo 0
     exit 0
