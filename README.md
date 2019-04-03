@@ -22,7 +22,7 @@ Zabbix agent config updater.
 ├─ .zbx-cfg-md5.php                                 страница, принимающая запрос от хоста  
 └─ .zbx_cfg_md5.sh                                  сценарий, определяющий MD5 набора файлов  
   
-На стороне клиента необходим wget и zabbix-agent. На хост скопировать каталоги /etc/sudoers.d и /etc/zabbix.  
+На стороне клиента необходим wget, at и zabbix-agent. На хост скопировать каталоги /etc/sudoers.d и /etc/zabbix.  
 На сервере Zabbix импортировать шаблон Template_App_Zabbix_Agent_config_updater.xml. Привязать шаблон к нужным хостам.  
   
 
